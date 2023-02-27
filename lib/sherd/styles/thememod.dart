@@ -44,7 +44,7 @@ ThemeData lightTheme = ThemeData(
   colorScheme: const ColorScheme(
     tertiary: Colors.grey,
     brightness: Brightness.light,
-    primary: Colors.white,
+    primary: Colors.green,
     onPrimary: Colors.green,
     secondary: Colors.green,
     onSecondary: Colors.black,
@@ -56,6 +56,7 @@ ThemeData lightTheme = ThemeData(
     outline: Colors.green,
     onSurface: Colors.green,
   ),
+
   scaffoldBackgroundColor: Colors.white,
   primaryColor: Colors.green,
   appBarTheme: const AppBarTheme(
@@ -78,7 +79,7 @@ ThemeData lightTheme = ThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: Colors.green,
     unselectedItemColor: Colors.grey,
-    elevation: 20,
+    elevation: 0.0,
     backgroundColor: Colors.white,
   ),
 );

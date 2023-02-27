@@ -8,6 +8,7 @@ import 'package:socia_app/modules/login/login_screen.dart';
 import 'package:socia_app/modules/register/cubit/cubit.dart';
 import 'package:socia_app/modules/register/cubit/states.dart';
 import 'package:socia_app/sherd/components/components.dart';
+import 'package:socia_app/sherd/styles/icon_broken.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -25,21 +26,23 @@ class RegisterScreen extends StatelessWidget {
       create: (context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterState>(
         listener: (context, state) {
-
           if (state is CreateSuccessState) {
             NavigatorAndFinish(
               context: context,
               Widget: LoginScreen(),
             );
-
-
-
           }
         },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.green,
+              leading: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    IconBroken.Arrow___Left_2,
+                    color: Colors.white,
+                  )),
             ),
             body: GestureDetector(
               onTap: () {
@@ -399,7 +402,7 @@ class RegisterScreen extends StatelessWidget {
                             ConditionalBuilder(
                               condition: state is! CreateLoadingState,
                               builder: (context) => defaultButton(
-                                colors: Colors.red,
+                                colors: Colors.green,
                                 text: Text(
                                   'Register',
                                   style: Theme.of(context)

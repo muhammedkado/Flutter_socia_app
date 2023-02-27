@@ -75,7 +75,7 @@ class FeedScreen extends StatelessWidget {
                   const CircleAvatar(
                     radius: 25.0,
                     backgroundImage: NetworkImage(
-                      'https://img.freepik.com/free-photo/waist-up-shot-pretty-girl-smiles-pleasantly_273609-28224.jpg?w=1060&t=st=1677340869~exp=1677341469~hmac=75e056c3cac76bbea19e347fe3366529fb34055ea4a6870d08c23eeacceabd33',
+                      'https://pps.whatsapp.net/v/t61.24694-24/321183664_868676937754511_1881531121242254427_n.jpg?ccb=11-4&oh=01_AdRcxRiF-nDRXMetu-Ze-OxZ4gvr1Ww1RbIr3KAYRw1a4g&oe=64084763',
                     ),
                   ),
                   const SizedBox(
@@ -88,7 +88,7 @@ class FeedScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Rania Kado',
+                              'Slava Mahmoud',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             const Icon(
@@ -264,7 +264,7 @@ class FeedScreen extends StatelessWidget {
                           const CircleAvatar(
                             radius: 18.0,
                             backgroundImage: NetworkImage(
-                              'https://img.freepik.com/free-photo/waist-up-shot-pretty-girl-smiles-pleasantly_273609-28224.jpg?w=1060&t=st=1677340869~exp=1677341469~hmac=75e056c3cac76bbea19e347fe3366529fb34055ea4a6870d08c23eeacceabd33',
+                              'https://pps.whatsapp.net/v/t61.24694-24/321183664_868676937754511_1881531121242254427_n.jpg?ccb=11-4&oh=01_AdRcxRiF-nDRXMetu-Ze-OxZ4gvr1Ww1RbIr3KAYRw1a4g&oe=64084763',
                             ),
                           ),
                           const SizedBox(

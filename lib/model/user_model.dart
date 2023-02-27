@@ -17,17 +17,17 @@ class UserModel {
   UserModel(
 
       {
-        required this.isEmailVerified,
+          this.isEmailVerified,
         required this.name,
         required this.email,
         required this.phone,
-        required this.brithDay,
-        required this.country,
+          this.brithDay,
+          this.country,
         required this.image,
         required this.cover,
         required this.bio,
-        required this.gender,
-        required this.uId,
+          this.gender,
+          this.uId,
 
 
 
