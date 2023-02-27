@@ -60,7 +60,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         .createUserWithEmailAndPassword(
       email: email,
       password: password,
-    ).then((value) {
+    )
+        .then((value) {
       saveUserInfo(
           isEmailVerified: false,
           name: name,
@@ -89,7 +90,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     required uId,
   }) {
     UserModel user = UserModel(
-      isEmailVerified: isEmailVerified,
+      cover: 'https://img.freepik.com/free-photo/cheerful-caucasian-girl-keeps-hands-together-near-face-looks-positively-aside-has-no-make-up-healthy-skin-wears-white-sweater-stands-purple-wall-with-blank-space-your-promotion_273609-26101.jpg?w=1060&t=st=1677340569~exp=1677341169~hmac=a70cc37ce2054d89d6da7de97de61231341faf257173dde4156244b6766286a6',
+      bio: 'write you bio...',
+      image:
+          'https://cdn-icons-png.flaticon.com/512/983/983969.png?w=740&t=st=1677356979~exp=1677357579~hmac=98d67720a56e1823e360362ebd23fec67d4d06893b7e063c4da069af9c24d17c',
+      isEmailVerified: false,
       name: name,
       email: email,
       phone: phone,
@@ -105,8 +110,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         .set(user.toMap())
         .then((value) {
       emit(SaveInfoSuccessState());
-    })
-        .catchError((onError) {
+    }).catchError((onError) {
       emit(SaveInfoErrorState());
       print('=============>${onError.toString()}');
     });

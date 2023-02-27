@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socia_app/layout/cubit/cubit.dart';
 import 'package:socia_app/layout/cubit/state.dart';
+import 'package:socia_app/modules/new_post/new_post_screen.dart';
+import 'package:socia_app/sherd/components/components.dart';
+import 'package:socia_app/sherd/styles/icon_broken.dart';
 
 class SocialLayout extends StatelessWidget {
   SocialLayout({Key? key}) : super(key: key);
@@ -9,8 +12,8 @@ class SocialLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=SocialCubit.get(context);
-    return BlocConsumer<SocialCubit,SocialStates>(
+    var cubit = SocialCubit.get(context);
+    return BlocConsumer<SocialCubit, SocialStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -20,10 +23,17 @@ class SocialLayout extends StatelessWidget {
             title: Text(cubit.title[cubit.currentIndex]),
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications,
-                  ))
+                onPressed: () {},
+                icon: Icon(
+                  IconBroken.Search,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  IconBroken.Notification,
+                ),
+              ),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -33,38 +43,46 @@ class SocialLayout extends StatelessWidget {
             },
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
-                label: 'New Project',
+                icon: Icon(IconBroken.Home),
+                label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.check_box_outlined,
+                  IconBroken.Chat,
                 ),
-                label: 'My project',
+                label: 'Chat',
               ),
-              /*
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.send_rounded,
-              ),
-              label: 'Contact',
-              activeIcon: Icon(Icons.send_outlined),
-            ),
-            */
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.settings,
+                  IconBroken.User,
+                ),
+                label: 'Users',
+              ),
+              BottomNavigationBarItem(
+
+                icon: Icon(
+                  IconBroken.Setting,
                 ),
                 label: 'Settings',
               ),
             ],
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+
+            onPressed: () {
+              Navigatorto(context: context, Widget: NewPostScreen());
+            },
+            child: Icon(
+              IconBroken.Send,
+              color: Colors.green,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.onBackground,
+          ),
           body: cubit.screen[cubit.currentIndex],
         );
       },
-
     );
   }
 }

@@ -5,8 +5,11 @@ class UserModel {
   String? phone;
   String? brithDay;
   String? country;
+  String? image;
+  String? cover;
   String? gender;
   String? uId;
+  String? bio;
   String? time;
   //DateTime? timeStamp;
   bool? isEmailVerified;
@@ -14,14 +17,17 @@ class UserModel {
   UserModel(
 
       {
-        required this.isEmailVerified,
+          this.isEmailVerified,
         required this.name,
         required this.email,
         required this.phone,
-        required this.brithDay,
-        required this.country,
-        required this.gender,
-        required this.uId,
+          this.brithDay,
+          this.country,
+        required this.image,
+        required this.cover,
+        required this.bio,
+          this.gender,
+          this.uId,
 
 
 
@@ -34,6 +40,9 @@ class UserModel {
     brithDay = json['brithday'];
     country = json['country'];
     gender = json['gender'];
+    image = json['image'];
+    cover = json['cover'];
+    bio = json['bio'];
     uId = json['uId'];
 
     //timeStamp = json['timeStamp'].toDate();
@@ -47,6 +56,9 @@ class UserModel {
       'phone': phone,
       'brithday': brithDay,
       'country': country,
+      'image': image,
+      'cover': cover,
+      'bio': bio,
       'gender': gender,
       'uId': uId,
       'time': DateTime.now(),

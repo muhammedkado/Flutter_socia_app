@@ -49,6 +49,8 @@ dependencies:
   cloud_firestore: ^4.4.3
   hexcolor: ^3.0.1
   shared_preferences: ^2.0.18
+  image_picker: ^0.8.6+3
+  firebase_storage: ^11.0.14
 
 dev_dependencies:
   flutter_test:

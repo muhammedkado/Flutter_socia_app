@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:conditional_builder_null_safety/example/example.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:socia_app/modules/login/login_screen.dart';
 
 import 'sherd/components/constants.dart';
 import 'sherd/network/local/cachHelper.dart';
+import 'sherd/styles/thememod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,10 +47,9 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
 
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                fontFamily: 'Jannah',
-                primarySwatch: Colors.blue,
-              ),
+              darkTheme: darkTheme,
+themeMode: ThemeMode.light,
+              theme: lightTheme,
               home:startScreen ,
             );
           },

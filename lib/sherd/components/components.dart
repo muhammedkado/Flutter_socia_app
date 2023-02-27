@@ -38,7 +38,7 @@ Widget defaultFormField({
       autofocus: true,
       decoration: InputDecoration(
         focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color:Colors.black)
+           borderSide: BorderSide(color:Colors.black)
         ),
         hintStyle: const TextStyle(color: Colors.grey),
         hintText: hintText,
