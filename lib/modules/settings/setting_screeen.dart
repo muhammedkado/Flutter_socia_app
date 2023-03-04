@@ -1,7 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socia_app/layout/cubit/cubit.dart';
 import 'package:socia_app/layout/cubit/state.dart';
+import 'package:socia_app/modules/login/login_screen.dart';
 import 'package:socia_app/sherd/components/components.dart';
 import 'package:socia_app/sherd/styles/icon_broken.dart';
 
@@ -15,7 +17,9 @@ class SettingScreen extends StatelessWidget {
     return BlocConsumer<SocialCubit, SocialStates>(
       builder: (context, state) {
         var userModel = SocialCubit.get(context).userModel;
-        return Padding(
+        return ConditionalBuilder(
+         condition: userModel !=null,
+        builder: (context) =>  Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             child: Column(
@@ -46,7 +50,7 @@ class SettingScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 64,
                         backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
+                        Theme.of(context).scaffoldBackgroundColor,
                         child: CircleAvatar(
                           radius: 60.0,
                           backgroundImage: NetworkImage(
@@ -156,7 +160,7 @@ class SettingScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                         child: OutlinedButton(
+                        child: OutlinedButton(
                             onPressed: () {},
                             child: Text(
                               'Add photos',
@@ -174,10 +178,15 @@ class SettingScreen extends StatelessWidget {
                         child: Icon(IconBroken.Edit,size: 16,color: Theme.of(context).colorScheme.onBackground,)),
                   ],
                 ),
+                defaultButton(colors: Colors.red, text: Text('LogOut'), function: (){
+                  SocialCubit.get(context).logOut(context: context,screen: LoginScreen());
+                })
 
               ],
             ),
           ),
+        ),
+          fallback: (context) => const Center(child: CircularProgressIndicator()),
         );
       },
       listener: (context, state) {},
