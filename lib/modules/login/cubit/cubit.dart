@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socia_app/modules/login/cubit/states.dart';
 import 'package:socia_app/sherd/components/components.dart';
+import 'package:socia_app/sherd/network/local/cachHelper.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState());
@@ -24,7 +25,9 @@ class LoginCubit extends Cubit<LoginStates> {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      emit(LoginSuccessState(value.user?.uid));
+          var id=value.user?.uid;
+      CachHelper.saveData(key: 'uId', value: value.user!.uid).then((value) => emit(LoginSuccessState(id)));
+      
     ShowTost(msg: 'Login Success', state: TostState.SUCCESS);
     }).catchError((Error){
       emit(LoginErrorState());

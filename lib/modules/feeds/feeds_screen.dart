@@ -1,7 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socia_app/layout/cubit/cubit.dart';
 import 'package:socia_app/layout/cubit/state.dart';
+import 'package:socia_app/model/post_model.dart';
 import 'package:socia_app/sherd/styles/icon_broken.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -11,71 +13,79 @@ class FeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialStates>(
       builder: (context, state) {
-        return SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Card(
-                margin: const EdgeInsets.all(8),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                elevation: 10,
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomStart,
-                  children: [
-                    const Image(
-                      image: NetworkImage(
-                        'https://img.freepik.com/free-photo/cheerful-caucasian-girl-keeps-hands-together-near-face-looks-positively-aside-has-no-make-up-healthy-skin-wears-white-sweater-stands-purple-wall-with-blank-space-your-promotion_273609-26101.jpg?w=1060&t=st=1677340569~exp=1677341169~hmac=a70cc37ce2054d89d6da7de97de61231341faf257173dde4156244b6766286a6',
+        var cubit =SocialCubit.get(context);
+        return ConditionalBuilder(
+          builder: (context) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment:MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                  margin: const EdgeInsets.all(8),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  elevation: 10,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      const Image(
+                        image: NetworkImage(
+                          'https://img.freepik.com/free-photo/cheerful-caucasian-girl-keeps-hands-together-near-face-looks-positively-aside-has-no-make-up-healthy-skin-wears-white-sweater-stands-purple-wall-with-blank-space-your-promotion_273609-26101.jpg?w=1060&t=st=1677340569~exp=1677341169~hmac=a70cc37ce2054d89d6da7de97de61231341faf257173dde4156244b6766286a6',
+                        ),
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity,
                       ),
-                      fit: BoxFit.cover,
-                      height: 200,
-                      width: double.infinity,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('communicate with friends',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600)),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('communicate with friends',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600)),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => buildPostItem(context),
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 8,
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => buildPostItem(cubit.post[index],context,index),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 8,
+                  ),
+                  itemCount: cubit.post.length,
                 ),
-                itemCount: 10,
-              ),
-              SizedBox(height: 15,)
-            ],
+                const SizedBox(height: 15,)
+              ],
+            ),
           ),
+          condition:cubit.post.length>0 && cubit.userModel !=null,
+          fallback: (context) => const Center(child: CircularProgressIndicator(),),
         );
       },
       listener: (context, state) {},
     );
   }
 
-  Widget buildPostItem(context) => Card(
+  Widget buildPostItem(PostModel postModel,context,index) => Card(
         margin: const EdgeInsets.symmetric(horizontal: 8),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
+                    CircleAvatar(
                     radius: 25.0,
                     backgroundImage: NetworkImage(
-                      'https://pps.whatsapp.net/v/t61.24694-24/321183664_868676937754511_1881531121242254427_n.jpg?ccb=11-4&oh=01_AdRcxRiF-nDRXMetu-Ze-OxZ4gvr1Ww1RbIr3KAYRw1a4g&oe=64084763',
+                      '${postModel.image}',
                     ),
                   ),
                   const SizedBox(
@@ -88,7 +98,7 @@ class FeedScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Slava Mahmoud',
+                              '${postModel.name}',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             const Icon(
@@ -99,7 +109,7 @@ class FeedScreen extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          'February 21,2021 at 11:00 pm',
+                          '${postModel.time}',
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ],
@@ -123,17 +133,18 @@ class FeedScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                '${postModel.text}',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
+              /*
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+               // padding: const EdgeInsets.symmetric(vertical: 1),
                 width: double.infinity,
                 child: Wrap(
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.only(end: 6),
-                      child: Container(
+                      child: SizedBox(
                         height: 20,
                         child: MaterialButton(
                           onPressed: () {},
@@ -142,9 +153,9 @@ class FeedScreen extends StatelessWidget {
                           child: Text(
                             '#Software',
                             style:
-                                Theme.of(context).textTheme.caption!.copyWith(
-                                      color: Colors.blue,
-                                    ),
+                            Theme.of(context).textTheme.caption!.copyWith(
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                       ),
@@ -160,9 +171,9 @@ class FeedScreen extends StatelessWidget {
                           child: Text(
                             '#Flutter',
                             style:
-                                Theme.of(context).textTheme.caption!.copyWith(
-                                      color: Colors.blue,
-                                    ),
+                            Theme.of(context).textTheme.caption!.copyWith(
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                       ),
@@ -170,25 +181,33 @@ class FeedScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                  height: 200,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://pps.whatsapp.net/v/t61.24694-24/295522486_1844839602388410_1899377814988311335_n.jpg?ccb=11-4&oh=01_AdTp6vTBCkz8A6AckcYQHFnsG7F6wjoPGhNzqAtO0HpwKQ&oe=64074DC1',
+
+               */
+              if(postModel.postImage!='')
+                Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      image:   DecorationImage(
+                        image: NetworkImage(
+                          '${postModel.postImage}',
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                    )),
+              ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Row(
@@ -202,7 +221,7 @@ class FeedScreen extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '120',
+                                '${SocialCubit.get(context).likes[index]}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
@@ -215,9 +234,11 @@ class FeedScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          SocialCubit.get(context).commentPostCount(SocialCubit.get(context).postId[index]);
+                        },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          padding: const EdgeInsets.symmetric(vertical: 2),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -231,7 +252,7 @@ class FeedScreen extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '50 comment',
+                                '${SocialCubit.get(context).comments[index]} comment',
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
@@ -246,8 +267,8 @@ class FeedScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
-                  bottom: 10,
+                margin: const EdgeInsets.only(
+                  bottom: 5,
                 ),
                 width: double.infinity,
                 height: 1,
@@ -261,10 +282,10 @@ class FeedScreen extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const CircleAvatar(
+                            CircleAvatar(
                             radius: 18.0,
                             backgroundImage: NetworkImage(
-                              'https://pps.whatsapp.net/v/t61.24694-24/321183664_868676937754511_1881531121242254427_n.jpg?ccb=11-4&oh=01_AdRcxRiF-nDRXMetu-Ze-OxZ4gvr1Ww1RbIr3KAYRw1a4g&oe=64084763',
+                              '${SocialCubit.get(context).userModel!.image}',
                             ),
                           ),
                           const SizedBox(
@@ -279,7 +300,9 @@ class FeedScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      SocialCubit.get(context).likePost( SocialCubit.get(context).postId[index]);
+                    },
                     child: Row(
                       children: [
                         const Icon(

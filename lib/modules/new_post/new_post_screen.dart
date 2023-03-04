@@ -17,7 +17,7 @@ class NewPostScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0.0,
-            title: Text(
+            title: const Text(
               'New Post',
             ),
             actions: [
@@ -46,6 +46,12 @@ class NewPostScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
+                if (state is CreatePostLoadingState)
+                  const LinearProgressIndicator(),
+                if (state is CreatePostLoadingState)
+                  const SizedBox(
+                    height: 15,
+                  ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -74,53 +80,47 @@ class NewPostScreen extends StatelessWidget {
                     decoration: InputDecoration(
                         hintText:
                             'what is on your mind, ${cubit.userModel!.name} ...',
-                        hintStyle: TextStyle(fontSize: 15),
+                        hintStyle: const TextStyle(fontSize: 15),
                         border: InputBorder.none),
                   ),
                 ),
-                Stack(
+                if(cubit.postImage != null)
+                  Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: [
-                    Align(
-                      alignment: AlignmentDirectional.topCenter,
-                      child: Stack(
-                        alignment: AlignmentDirectional.topEnd,
-                        children: [
-                          Container(
-                            height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: cubit.postImage == null
-                                      ? NetworkImage(
-                                    '${cubit.userModel!.cover}',
-                                  )
-                                      : FileImage(cubit.postImage!)
-                                  as ImageProvider,
-                                  fit: BoxFit.cover),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                topRight: Radius.circular(5),
-                              ),
+                    Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: [
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:FileImage(cubit.postImage!)
+                                ,
+                                fit: BoxFit.cover),
+                            borderRadius:BorderRadius.circular(4)
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            cubit.removePostImage();
+                          },
+                          icon: const CircleAvatar(
+                            radius: 20,
+                            child: Icon(
+                              Icons.cancel_outlined,
+                              size: 16,
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              cubit.getCoverImage();
-                            },
-                            icon: const CircleAvatar(
-                              radius: 20,
-                              child: Icon(
-                                Icons.cancel_outlined,
-                                size: 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
 
                   ],
+                ),
+                const SizedBox(
+                  height: 5 ,
                 ),
                 Row(
                   children: [
@@ -142,7 +142,7 @@ class NewPostScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextButton(
-                          onPressed: () {}, child: Text('# heshdak')),
+                          onPressed: () {}, child: const Text('# heshdak')),
                     ),
                   ],
                 )

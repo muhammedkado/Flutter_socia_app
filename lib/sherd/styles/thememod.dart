@@ -106,7 +106,7 @@ ThemeData darkTheme = ThemeData(
       fontSize: 18.0,
       fontFamily: 'Jannah.ttf',
       color: Colors.white,
-      overflow: TextOverflow.ellipsis,
+
     ),
     bodyLarge: TextStyle(
       fontFamily: 'Jannah.ttf',
